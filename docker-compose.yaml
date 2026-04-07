@@ -1,0 +1,17 @@
+services:
+  crud-database:
+    image: postgres:18.3-bookworm
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    ports:
+      - ${DB_PORT}:5432
+    volumes:
+      - ./pgdata:/var/lib/postgresql
+    restart: always
+  crud-migrate: 
+    image: migrate/migrate:v4.19.1
+    volumes:
+      - ./migrations:/migrations
+
