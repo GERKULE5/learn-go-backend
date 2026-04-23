@@ -1,10 +1,12 @@
 // models/user.go
 package models
 
+import "gorm.io/gorm"
+
 type User struct {
-	Id int `json:"id"`
-	Name string `json:"name"`
-	Lastname string `json:"lastname"`
+	gorm.Model
+	Name string `json:"name" gorm:"not null"`
+	Fullname string `json:"full_name" gorm:"not null"`
 	Age int `json:"age"`
 	IsSmart bool `json:"is_smart"`
 }
