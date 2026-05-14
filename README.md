@@ -193,5 +193,3 @@ Response `404 Not Found`:
   "error": "user with id 1 not found"
 }
 ```
- 
----
