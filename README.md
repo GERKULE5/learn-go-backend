@@ -15,7 +15,6 @@ REST API for user management built with Go, Gin, GORM and PostgreSQL.
 ### Prerequisites
  
 - [Docker](https://www.docker.com/)
-- [Make](https://www.gnu.org/software/make/)
 ### Setup
  
 1. Clone the repository:
@@ -31,7 +30,7 @@ cp .env.example .env
  
 3. Start the application:
 ```bash
-make up
+task dev
 ```
  
 The server will be available at `http://localhost:8000`.
@@ -49,7 +48,9 @@ Request body:
 ```json
 {
   "name": "John",
-  "full_name": "John Doe",
+  "username": "@johndoe",
+  "email": "johndow123@gmail.com",
+  "phone_number": "+71234567890",
   "age": 25,
   "is_smart": true
 }
@@ -60,9 +61,14 @@ Response `201 Created`:
 {
   "id": 1,
   "name": "John",
-  "full_name": "John Doe",
+  "username": "@johndoe",
+  "email": "johndow123@gmail.com",
+  "phone_number": "+71234567890",
   "age": 25,
-  "is_smart": true
+  "is_smart": true,
+  "created_at": "2026-05-14T20:30:11+07:00",
+  "updated_at": "2026-05-14T20:30:11+07:00",
+  "deleted_at": null
 }
 ```
  
@@ -80,9 +86,14 @@ Response `200 OK`:
     {
       "id": 1,
       "name": "John",
-      "full_name": "John Doe",
+      "username": "@johndoe",
+      "email": "johndow123@gmail.com",
+      "phone_number": "+71234567890",
       "age": 25,
-      "is_smart": true
+      "is_smart": true,
+      "created_at": "2026-05-14T20:30:11+07:00",
+      "updated_at": "2026-05-14T20:30:11+07:00",
+      "deleted_at": null
     }
   ]
 }
@@ -100,9 +111,14 @@ Response `200 OK`:
 {
   "id": 1,
   "name": "John",
-  "full_name": "John Doe",
+  "username": "@johndoe",
+  "email": "johndow123@gmail.com",
+  "phone_number": "+71234567890",
   "age": 25,
-  "is_smart": true
+  "is_smart": true,
+  "created_at": "2026-05-14T20:30:11+07:00",
+  "updated_at": "2026-05-14T20:30:11+07:00",
+  "deleted_at": null
 }
 ```
  
@@ -123,10 +139,12 @@ PUT /users/:id
 Request body (all fields optional):
 ```json
 {
-  "name": "Jane",
-  "full_name": "Jane Doe",
-  "age": 30,
-  "is_smart": false
+  "name": "John",
+  "username": "@johndoe",
+  "email": "johndow123@gmail.com",
+  "phone_number": "+71234567890",
+  "age": 25,
+  "is_smart": true,
 }
 ```
  
@@ -134,10 +152,15 @@ Response `200 OK`:
 ```json
 {
   "id": 1,
-  "name": "Jane",
-  "full_name": "Jane Doe",
-  "age": 30,
-  "is_smart": false
+  "name": "John",
+  "username": "@johndoe",
+  "email": "johndow123@gmail.com",
+  "phone_number": "+71234567890",
+  "age": 25,
+  "is_smart": true,
+  "created_at": "2026-05-14T20:30:11+07:00",
+  "updated_at": "2026-05-14T20:30:11+07:00",
+  "deleted_at": null
 }
 ```
  
@@ -153,9 +176,14 @@ Response `200 OK`:
 {
   "id": 1,
   "name": "John",
-  "full_name": "John Doe",
+  "username": "@johndoe",
+  "email": "johndow123@gmail.com",
+  "phone_number": "+71234567890",
   "age": 25,
-  "is_smart": true
+  "is_smart": true,
+  "created_at": "2026-05-14T20:30:11+07:00",
+  "updated_at": "2026-05-14T20:30:11+07:00",
+  "deleted_at": "2026-05-14T20:33:11+07:00"
 }
 ```
  
