@@ -1,0 +1,35 @@
+version: '3'
+
+dotenv: ['.env']
+
+tasks:
+  dev:
+    desc: "Start dev server"
+    cmds: 
+      - docker-compose up -d crud-database
+      - go run ./cmd/api/main.go
+  
+  reset:
+    desc: "Deploy all dockers"
+    cmds:
+      - docker-compose up -d crud-database
+  
+  down:
+    desc: "Down all dockers"
+    cmds:
+      - docker-compose down
+
+  migrate:up:
+    desc: "Run migrations"
+    cmds:
+      - migrate -path migrations -database "{{.DB_URL}}" up
+
+  migrate:down:
+    desc: "Cancel last migration"
+    cmds:
+      - migrate -path migrations -database "{{.DB_URL}}" down 1
+
+  migrate:create:
+    desc: "Create migration"
+    cmds:
+      - migrate create -ext sql -dir migrations -seq {{.CLI_ARGS}}

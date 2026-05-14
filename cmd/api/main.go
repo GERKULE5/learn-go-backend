@@ -27,11 +27,6 @@ func main() {
 		log.Fatal("Failed to connect to database:", err)
 	}
 
-	err = database.Migrate(db)
-	if err != nil {
-		log.Fatal("Failed to migrate:", err)
-	}
-
 	userRepo := repository.NewUserRepository(db)
 	userService := service.NewUserService(userRepo)
 	userHandler := handler.NewUserHandler(userService)

@@ -25,10 +25,12 @@ func NewUserService(repo repository.UserRepositoryInterface) UserServiceInterfac
 
 func (service *userService) Create(ctx context.Context, data dto.CreateUserDTO) (dto.UserDTO, error) {
 	user := &models.User{
-		Name:     data.Name,
-		Fullname: data.Fullname,
-		Age:      data.Age,
-		IsSmart:  data.IsSmart,
+		Name:        data.Name,
+		Username:    data.Username,
+		Email:       data.Email,
+		PhoneNumber: data.PhoneNumber,
+		Age:         data.Age,
+		IsSmart:     data.IsSmart,
 	}
 
 	if err := service.repo.Create(ctx, user); err != nil {
@@ -74,14 +76,20 @@ func (service *userService) Update(ctx context.Context, id int, data dto.UpdateU
 	if data.Name != "" {
 		user.Name = data.Name
 	}
-	if data.Fullname != "" {
-		user.Fullname = data.Fullname
+	if data.Username != "" {
+		user.Username = data.Username
+	}
+	if data.Email != "" {
+		user.Email = data.Email
+	}
+	if data.PhoneNumber != "" {
+		user.PhoneNumber = data.PhoneNumber
 	}
 	if data.Age != 0 {
 		user.Age = data.Age
 	}
-	if data.IsSmart != nil {
-		user.IsSmart = *data.IsSmart
+	if data.IsSmart != false {
+		user.IsSmart = data.IsSmart
 	}
 
 	err = service.repo.Update(ctx, user)
@@ -109,10 +117,15 @@ func (service *userService) Delete(ctx context.Context, id int) (dto.UserDTO, er
 
 func toDTO(u *models.User) dto.UserDTO {
 	return dto.UserDTO{
-		ID:       int(u.ID),
-		Name:     u.Name,
-		Fullname: u.Fullname,
-		Age:      u.Age,
-		IsSmart:  u.IsSmart,
+		ID:          int(u.ID),
+		Name:        u.Name,
+		Username:    u.Username,
+		Email:       u.Email,
+		PhoneNumber: u.PhoneNumber,
+		Age:         u.Age,
+		IsSmart:     u.IsSmart,
+		CreatedAt:   u.CreatedAt,
+		UpdatedAt:   u.UpdatedAt,
+		DeletedAt:   u.DeletedAt,
 	}
 }

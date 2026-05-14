@@ -1,12 +1,17 @@
 // models/user.go
 package models
 
-import "gorm.io/gorm"
+import "time"
 
 type User struct {
-	gorm.Model
-	Name string `json:"name" gorm:"not null"`
-	Fullname string `json:"full_name" gorm:"not null"`
-	Age int `json:"age"`
-	IsSmart bool `json:"is_smart"`
+	ID          uint       `json:"id" gorm:"primaryKey;autoIncrement"`
+	Name        string `json:"name" gorm:"not null;size:20"`
+	Username    string `json:"username" gorm:"not null;unique;size:16"`
+	Email       string `json:"email" gorm:"not null;unique;size:100"`
+	PhoneNumber string `json:"phone_number" gorm:"not null;unique;size:25"`
+	Age         int    `json:"age" gorm:"default:0"`
+	IsSmart     bool   `json:"is_smart" gorm:"default:false"`
+	CreatedAt   time.Time  `json:"created_at"`
+    UpdatedAt   time.Time  `json:"updated_at"`
+    DeletedAt   *time.Time `json:"deleted_at"`
 }
