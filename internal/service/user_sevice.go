@@ -73,24 +73,25 @@ func (service *userService) Update(ctx context.Context, id int, data dto.UpdateU
 		return dto.UserDTO{}, err
 	}
 
-	if data.Name != "" {
-		user.Name = data.Name
+	if data.Name != nil {
+		user.Name = *data.Name
 	}
-	if data.Username != "" {
-		user.Username = data.Username
+	if data.Username != nil {
+		user.Username = *data.Username
 	}
-	if data.Email != "" {
-		user.Email = data.Email
+	if data.Email != nil {
+		user.Email = *data.Email
 	}
-	if data.PhoneNumber != "" {
-		user.PhoneNumber = data.PhoneNumber
+	if data.PhoneNumber != nil {
+		user.PhoneNumber = *data.PhoneNumber
 	}
-	if data.Age != 0 {
-		user.Age = data.Age
+	if data.Age != nil {
+		user.Age = *data.Age
 	}
-	if data.IsSmart != false {
-		user.IsSmart = data.IsSmart
+	if data.IsSmart != nil {
+		user.IsSmart = *data.IsSmart
 	}
+	// FIX: Use pointer values so explicit false and zero values are applied correctly during update.
 
 	err = service.repo.Update(ctx, user)
 	if err != nil {

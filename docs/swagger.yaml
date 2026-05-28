@@ -1,0 +1,251 @@
+basePath: /api/v1
+definitions:
+  app_errors.ErrorResponse:
+    properties:
+      error:
+        type: string
+    type: object
+  dto.CreateUserDTO:
+    properties:
+      age:
+        type: integer
+      email:
+        type: string
+      is_smart:
+        type: boolean
+      name:
+        maxLength: 20
+        type: string
+      phone_number:
+        maxLength: 25
+        type: string
+      username:
+        maxLength: 16
+        minLength: 4
+        type: string
+    required:
+    - email
+    - name
+    - phone_number
+    - username
+    type: object
+  dto.UpdateUserDTO:
+    properties:
+      age:
+        type: integer
+      email:
+        type: string
+      is_smart:
+        type: boolean
+      name:
+        maxLength: 20
+        type: string
+      phone_number:
+        maxLength: 25
+        type: string
+      username:
+        maxLength: 16
+        minLength: 4
+        type: string
+    type: object
+  dto.UserDTO:
+    properties:
+      age:
+        type: integer
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      is_smart:
+        type: boolean
+      name:
+        type: string
+      phone_number:
+        type: string
+      updated_at:
+        type: string
+      username:
+        type: string
+    type: object
+  models.User:
+    properties:
+      age:
+        type: integer
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      is_smart:
+        type: boolean
+      name:
+        type: string
+      phone_number:
+        type: string
+      updated_at:
+        type: string
+      username:
+        type: string
+    type: object
+host: localhost:8000
+info:
+  contact: {}
+  description: A simple CRUD API built with Gin framework in Go.
+  title: CRUD API with Gin
+  version: "1.0"
+paths:
+  /users:
+    get:
+      description: Returns a list of all users
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.UserDTO'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/app_errors.ErrorResponse'
+      summary: Get all users
+      tags:
+      - Users
+    post:
+      consumes:
+      - application/json
+      description: Create a new user with the provided information
+      parameters:
+      - description: User data
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateUserDTO'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/app_errors.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/app_errors.ErrorResponse'
+      summary: Create a new user
+      tags:
+      - Users
+  /users/{id}:
+    delete:
+      description: Delete a user by ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.UserDTO'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/app_errors.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/app_errors.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/app_errors.ErrorResponse'
+      summary: Delete user
+      tags:
+      - Users
+    get:
+      description: Returns a single user by their ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.UserDTO'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/app_errors.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/app_errors.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/app_errors.ErrorResponse'
+      summary: Get user by ID
+      tags:
+      - Users
+    put:
+      consumes:
+      - application/json
+      description: Update an existing user by ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Updated user data
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateUserDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.UserDTO'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/app_errors.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/app_errors.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/app_errors.ErrorResponse'
+      summary: Update user
+      tags:
+      - Users
+swagger: "2.0"

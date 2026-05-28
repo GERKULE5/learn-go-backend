@@ -13,13 +13,15 @@ type CreateUserDTO struct {
 }
 
 type UpdateUserDTO struct {
-	Name        string `json:"name" binding:"omitempty,max=20"`
-	Username    string `json:"username" binding:"omitempty,max=16,min=4"`
-	Email       string `json:"email" binding:"omitempty,email"`
-	PhoneNumber string `json:"phone_number" binding:"omitempty,max=25"`
-	Age         int    `json:"age"`
-	IsSmart     bool   `json:"is_smart"`
+	Name        *string `json:"name" binding:"omitempty,max=20"`
+	Username    *string `json:"username" binding:"omitempty,max=16,min=4"`
+	Email       *string `json:"email" binding:"omitempty,email"`
+	PhoneNumber *string `json:"phone_number" binding:"omitempty,max=25"`
+	Age         *int    `json:"age"`
+	IsSmart     *bool   `json:"is_smart"`
 }
+
+// FIX: Use pointer fields in UpdateUserDTO so Update can distinguish "not provided" from explicit zero/false values.
 
 type UserDTO struct {
 	ID          int        `json:"id"`

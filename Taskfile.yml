@@ -7,6 +7,7 @@ tasks:
     desc: "Start dev server"
     cmds: 
       - docker-compose up -d crud-database
+      - swag init -g ./cmd/api/main.go
       - go run ./cmd/api/main.go
   
   reset:
@@ -33,3 +34,8 @@ tasks:
     desc: "Create migration"
     cmds:
       - migrate create -ext sql -dir migrations -seq {{.CLI_ARGS}}
+
+  swagger:generate:
+    desc: "Generate swagger documentaion"
+    cmds:
+      - swag init -g ./cmd/api/main.go

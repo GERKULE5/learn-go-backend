@@ -3,6 +3,7 @@ package repository
 
 import (
 	"context"
+	app_errors "crud-gin/internal/errors"
 	"crud-gin/internal/models"
 	"errors"
 	"fmt"
@@ -42,7 +43,7 @@ func (r *UserRepository) GetById(ctx context.Context, id int) (*models.User, err
 
 	if query.Error != nil {
 		if errors.Is(query.Error, gorm.ErrRecordNotFound) {
-			return nil, fmt.Errorf("User with id %d not found", id)
+			return nil, app_errors.ErrNotFound
 		}
 
 		return nil, fmt.Errorf("Failed to get user: %w", query.Error)
@@ -75,14 +76,13 @@ func (r *UserRepository) Delete(ctx context.Context, id int) error {
 	result := r.db.WithContext(ctx).Delete(&models.User{}, id)
 
 	if result.Error != nil {
-		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
-			return fmt.Errorf("user with id %d not found", id)
-		}
-		return fmt.Errorf("Failed to delete user with id %d", id)
+		// FIX: Delete should only return internal errors when the DB action fails.
+		return fmt.Errorf("Failed to delete user with id %d: %w", id, result.Error)
 	}
 
 	if result.RowsAffected == 0 {
-		return fmt.Errorf("user with id %d not found", id)
+		// FIX: Return not-found when no rows were deleted.
+		return app_errors.ErrNotFound
 	}
 
 	return nil

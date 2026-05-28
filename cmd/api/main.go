@@ -2,6 +2,7 @@
 package main
 
 import (
+	_ "crud-gin/docs"
 	"crud-gin/internal/handler"
 	"crud-gin/internal/repository"
 	"crud-gin/internal/service"
@@ -11,8 +12,15 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
+// @title           CRUD API with Gin
+// @version         1.0
+// @description     A simple CRUD API built with Gin framework in Go.
+// @host      localhost:8000
+// @BasePath  /api/v1
 func main() {
 	fmt.Println("Hello world")
 
@@ -33,13 +41,18 @@ func main() {
 
 	r := gin.Default()
 
-	users := r.Group("/users")
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
+	api := r.Group("/api/v1")
 	{
-		users.POST("", userHandler.Create)
-		users.GET("", userHandler.GetAll)
-		users.GET("/:id", userHandler.GetByID)
-		users.PUT("/:id", userHandler.Update)
-		users.DELETE("/:id", userHandler.Delete)
+		users := api.Group("/users")
+		{
+			users.POST("", userHandler.Create)
+			users.GET("", userHandler.GetAll)
+			users.GET("/:id", userHandler.GetByID)
+			users.PUT("/:id", userHandler.Update)
+			users.DELETE("/:id", userHandler.Delete)
+		}
 	}
 
 	err = r.Run(":8000")
