@@ -19,7 +19,7 @@ REST API for user management built with Go, Gin, GORM and PostgreSQL.
  
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/GERKULE5/crud-gin.git
 cd crud-gin
 ```
  
